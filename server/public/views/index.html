@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myTaskApp">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Postgres TODO App</title>
 
     <!--STYLES-->
+
     <link rel="stylesheet" href="/vendors/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/styles/style.css">
 
+    <!--Scripts-->
+    <script src="/vendors/angular/angular.min.js"></script>
+    <script src="/assets/scripts/app.min.js"></script>
+
 </head>
-<body>
+<body ng-controller="MainController">
     <div class="container">
-        <button class="btn btn-info get">Get Info</button>
+        <button class="btn btn-info get" ng-click="getTasks()">Get Info</button>
 
         <div class="col-md-4">
             <form id="taskForm" method="post">
                 <div>
                     <label for="text">Task:</label>
-                    <input type="text" name="text" id="text"/>
-                    <input type="submit" class="btn btn-info post" value="Create Task"/>
+                    <input type="text" name="text" id="text" ng-model="taskText">
+                    <input type="submit" class="btn btn-info post" value="Create Task" ng-click="taskSubmit()">
                 </div>
             </form>
         </div>
     </div>
 
-    <div id="someContainer" class="container">
+    <div id="someContainer" class="container" >
 
+        <div ng-repeat="task in taskData" class="task well col-md-3" id="{{task.id}}">
+            <p class="lead" ng-click="taskClicked(task)" id="{{task.complete}}">{{task.text}}</p>
+            <button class="btn btn-danger delete" ng-click="removeTasks($event)" id="{{task.id}}">X</button>
+        </div>
     </div>
 
 

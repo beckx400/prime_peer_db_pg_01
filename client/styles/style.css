@@ -7,3 +7,8 @@ body {
     background-color: #262626;
     color: #dddddd;
 }
+
+#true{
+    text-decoration: line-through;
+    color: white;
+}

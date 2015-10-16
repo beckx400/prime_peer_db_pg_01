@@ -10,7 +10,7 @@ router.post('/todos', function(req, res) {
     var data = {text: req.body.text, complete: false};
 
     // Get a Postgres client from the connection pool
-    pg.connect(connectionString, function(err, client, done) {
+    pg.connect(connectionString, function(err, client, donenod) {
 
         // SQL Query > Insert Data
         client.query("INSERT INTO items(text, complete) values($1, $2)", [data.text, data.complete]);
@@ -70,6 +70,8 @@ router.put('/todos/:todo_id', function(req, res) {
 
     var results = [];
 
+    console.log('PUT body', req.body);
+
     // Grab data from the URL parameters
     var id = req.params.todo_id;
 
@@ -88,11 +90,11 @@ router.put('/todos/:todo_id', function(req, res) {
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
-        });
+            });
 
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            client.end();
+            // After all data is returned, close connection and return results
+            query.on('end', function() {
+                client.end();
             return res.json(results);
         });
 
